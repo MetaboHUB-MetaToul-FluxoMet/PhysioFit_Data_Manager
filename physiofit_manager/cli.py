@@ -91,11 +91,15 @@ def process(args):
         na_rep=np.nan
     )
 
-
-cli_parser = parse_args()
-cli_args = cli_parser.parse_args()
-process(cli_args)
-
-
 class DataError(Exception):
     pass
+
+
+def main():
+
+    cli_parser = parse_args()
+    cli_args = cli_parser.parse_args()
+    process(cli_args)
+
+
+
