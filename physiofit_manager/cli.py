@@ -1,4 +1,5 @@
 import argparse
+import sys
 
 import numpy as np
 import pandas as pd
@@ -91,15 +92,18 @@ def process(args):
         na_rep=np.nan
     )
 
+
 class DataError(Exception):
     pass
 
 
 def main():
-
     cli_parser = parse_args()
     cli_args = cli_parser.parse_args()
     process(cli_args)
 
 
-
+if __name__ == "__main__":
+    sys.exit(
+        main()
+    )
