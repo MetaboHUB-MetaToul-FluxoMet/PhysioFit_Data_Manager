@@ -31,12 +31,16 @@ physiofit_manager -b biomass.tsv -c concentrations.tsv -e physiofit_input.tsv -x
 
 The output is tab-separated, with the columns PhysioFit expects: `experiments`, `time`, `X`, then one column per metabolite. Rows from both inputs are merged on `time` and sorted; a value measured in only one file is `nan` in the other's columns.
 
-## Tests
+## Development
+
+The project is managed with [Poetry](https://python-poetry.org/):
 
 ```bash
-pip install pytest
-pytest
+poetry install
+poetry run pytest
 ```
+
+The test that reads the output with PhysioFit is skipped unless `physiofit` is installed in the environment.
 
 ## License
 
