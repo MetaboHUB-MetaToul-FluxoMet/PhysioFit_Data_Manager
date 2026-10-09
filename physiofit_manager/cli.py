@@ -1,5 +1,6 @@
 import argparse
 import sys
+from pathlib import Path
 
 import numpy as np
 import pandas as pd
@@ -27,7 +28,13 @@ def parse_args():
     parser.add_argument(
         "-e", "--export_path",
         type=str,
-        help="Path to where the generated .mflux mtf file will be exported"
+        help="Path to where the generated PhysioFit input file will be exported"
+    )
+    parser.add_argument(
+        "-x", "--experiment",
+        type=str,
+        help="Name of the experiment, written in the 'experiments' column "
+             "required by PhysioFit (default: name of the biomass file)"
     )
     return parser
 
@@ -85,11 +92,16 @@ def process(args):
         how="outer",
         on="time"
     )
-    final_df = final_df.sort_index()
+    final_df = final_df.sort_index().reset_index()
+
+    # PhysioFit expects the experiment name as first column, then time
+    experiment = args.experiment or Path(args.biomass_file).stem
+    final_df.insert(0, "experiments", experiment)
     final_df.to_csv(
         args.export_path,
         sep="\t",
-        na_rep=np.nan
+        na_rep=np.nan,
+        index=False
     )
 
 
